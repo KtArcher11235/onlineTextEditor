@@ -5,3 +5,4 @@
     <li>Modern looking</li>
     <li>Easy to use</li>
 </ul>
+<p>This editor was created in order to provide an online enviroment to create, edit, and view simple files</p>
