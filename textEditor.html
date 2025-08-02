@@ -73,9 +73,22 @@
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        /* Mobile warning styles */
+        @media (max-width: 767px) {
+            #mobileWarning {
+                display: flex !important;
+            }
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen flex flex-col">
+    <!-- Mobile warning message -->
+    <div id="mobileWarning" style="display:none;" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div class="bg-white text-black rounded-lg p-6 shadow-lg text-center max-w-xs mx-auto flex flex-col items-center justify-center">
+            <h2 class="text-lg font-bold mb-2">Mobile Device Detected</h2>
+            <p class="mb-4">This editor is not optimized for mobile devices and will not work. For best results, please use a desktop or laptop.</p>
+        </div>
+    </div>
     <!-- Main container -->
     <div class="flex-1 flex flex-col w-full mx-auto">
         <!-- Editor card/container -->
@@ -144,6 +157,18 @@
     <!-- Main JavaScript logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Mobile detection and warning logic
+            function isMobile() {
+                return window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
+            // Only show warning if not previously dismissed
+            if (isMobile() && !localStorage.getItem('hideMobileWarning')) {
+                const mobileWarning = document.getElementById('mobileWarning');
+                if (mobileWarning) {
+                    mobileWarning.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+            }
             // Get DOM elements
             const editor = document.getElementById('editor');
             const importFile = document.getElementById('importFile');
